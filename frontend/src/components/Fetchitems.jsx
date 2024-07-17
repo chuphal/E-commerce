@@ -11,7 +11,7 @@ const Fetchitems = () => {
     if (fetchStatus.fetchDone) return;
 
     dispatch(fetchStatusActions.markFetchingStarted());
-    fetch("http://localhost:5000/items")
+    fetch("/items")
       .then((res) => res.json())
       .then(({ items }) => {
         console.log(items);

@@ -28,7 +28,11 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "https://apis.google.com"],
-        connectSrc: ["'self'", "https://identitytoolkit.googleapis.com"],
+        connectSrc: [
+          "'self'",
+          "https://identitytoolkit.googleapis.com",
+          "https://firestore.googleapis.com",
+        ],
       },
     },
   })

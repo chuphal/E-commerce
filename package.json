@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node backend/app.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "app": "nodemon backend/app.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "express-rate-limit": "^7.3.1",
     "helmet": "^7.1.0",
     "xss-clean": "^0.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }

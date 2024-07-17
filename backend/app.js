@@ -8,10 +8,8 @@ import xss from "xss-clean";
 import rateLimiter from "express-rate-limit";
 import path from "path";
 const __dirname = path.resolve();
-import { items } from "./data/mongoItem.js";
 
 import connectDB from "./db/dbConfig.js";
-import { getStoredItems, storeItems } from "./data/items.js";
 import DATA from "./models/Data.js";
 
 const app = express();
@@ -56,24 +54,6 @@ app.get("/items", async (req, res) => {
   const storedItems = await DATA.find();
   await new Promise((resolve, reject) => setTimeout(() => resolve(), 2000));
   res.json({ items: storedItems });
-});
-
-app.get("/items/:id", async (req, res) => {
-  const storedItems = await getStoredItems();
-  const item = storedItems.find((item) => item.id === req.params.id);
-  res.json({ item });
-});
-
-app.post("/items", async (req, res) => {
-  const existingItems = await getStoredItems();
-  const itemData = req.body;
-  const newItem = {
-    ...itemData,
-    id: Math.random().toString(),
-  };
-  const updatedItems = [newItem, ...existingItems];
-  await storeItems(updatedItems);
-  res.status(201).json({ message: "Stored new item.", item: newItem });
 });
 
 // app.get("/add", async (req, res) => {

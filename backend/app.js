@@ -19,7 +19,17 @@ app.use(
 );
 
 app.use(express.json());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://apis.google.com"],
+        connectSrc: ["'self'", "https://identitytoolkit.googleapis.com"],
+      },
+    },
+  })
+);
 app.use(
   cors({
     origin: "http://localhost:3000",

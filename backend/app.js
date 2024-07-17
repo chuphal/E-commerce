@@ -10,7 +10,7 @@ import path from "path";
 const __dirname = path.resolve();
 
 import connectDB from "./db/dbConfig.js";
-import DATA from "./models/Data.js";
+import DATA from "./models/DATA.js";
 
 const app = express();
 

@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import bodyParser from "body-parser";
 import helmet from "helmet";
@@ -6,8 +8,11 @@ import xss from "xss-clean";
 import rateLimiter from "express-rate-limit";
 import path from "path";
 const __dirname = path.resolve();
+import { items } from "./data/mongoItem.js";
 
+import connectDB from "./db/dbConfig.js";
 import { getStoredItems, storeItems } from "./data/items.js";
+import DATA from "./models/Data.js";
 
 const app = express();
 
@@ -48,7 +53,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/items", async (req, res) => {
-  const storedItems = await getStoredItems();
+  const storedItems = await DATA.find();
   await new Promise((resolve, reject) => setTimeout(() => resolve(), 2000));
   res.json({ items: storedItems });
 });
@@ -71,9 +76,31 @@ app.post("/items", async (req, res) => {
   res.status(201).json({ message: "Stored new item.", item: newItem });
 });
 
+// app.get("/add", async (req, res) => {
+//   try {
+//     const res = await DATA.insertMany(items);
+//     console.log("successfully", res);
+//     res.json({ msg: "successful" });
+//   } catch (error) {
+//     console.log("on add error", error);
+//   }
+// });
+
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
-app.listen(5000);
+const port = process.env.PORT || 5000;
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log("server start error", error);
+  }
+};
+
+start();

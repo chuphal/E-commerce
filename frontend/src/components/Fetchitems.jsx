@@ -14,13 +14,15 @@ const Fetchitems = () => {
     fetch("http://localhost:5000/items")
       .then((res) => res.json())
       .then(({ items }) => {
+        console.log(items);
         dispatch(fetchStatusActions.markFetchDone());
         dispatch(fetchStatusActions.markFetchingFinished());
-        dispatch(itemActions.addInitialItems(items[0]));
+        dispatch(itemActions.addInitialItems(items));
       });
   }, [fetchStatus]);
 
   return;
+  d;
 };
 
 export default Fetchitems;

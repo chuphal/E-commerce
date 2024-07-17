@@ -67,7 +67,7 @@ const Iteminfo = () => {
                     <h2 className="mb-2 fs-5 fw-bold text-gray-700">
                       Description :
                     </h2>
-                    <p>{""}</p>
+                    <p>{item.item_description}</p>
                   </div>
 
                   <div className="mb-6 " />
